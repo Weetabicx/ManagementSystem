@@ -1,0 +1,66 @@
+.login {
+    background-color: #dbd6c7;
+    text-align: center;
+    margin: auto;
+    display: table;
+    border-radius: 10px;
+}
+th {
+    width: 150px;
+}
+td > input#availability-checkbox{
+    margin: 5px;
+    width: 150px;
+}
+
+input {
+    margin: 5px;
+    width: 250px;
+}
+
+body {
+    gap: 10px;
+    background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.weddinginspiration.co.uk%2Fdownload.php%3Fattachid%3D29633&f=1&nofb=1&ipt=db29a29953c7c7a4443a5fb4407baa29a6f4cfa49f5c5882a3a853c27bf336ba&ipo=images');
+}
+
+#login-button {
+    padding: 0 20px 0 20px;
+}
+
+.navbar > span#sign-out {
+    float: right;
+    background-color: #dbd6c7;
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border-color: black;    
+    border-style: solid;
+    border-width: 2px;
+}
+.navbar > a {
+    margin-top: 10px;
+    background-color: #dbd6c7;
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border-color: black;    
+    border-style: solid;
+    border-width: 2px;
+}
+
+.navbar > a:hover {
+    box-shadow: 3px 3px black;
+}
+
+
+.rota > table, th, td {
+    margin: auto;
+    background-color: #dbd6c7;
+    border-style: solid;
+    border-collapse: collapse;
+    padding: 10px 3px 10px 3px;
+}
