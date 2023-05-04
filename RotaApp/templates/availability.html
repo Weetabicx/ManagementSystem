@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    {% block head %}
+        <title> Home </title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% endblock %}
+    
+{% block body %}
+    <div class="navbar">
+        <span id="sign-out">
+            <a href="{% url 'logout'%}">Sign Out</a>
+        </span>
+        <a href="/">Rota</a>
+        <a href="availability" style="background-color: white;">Availability</a>
+        <a href="url">Availability</a>
+    </div>
+
+    <div class="rota">
+        <table>
+            {% for day in days %}
+                <th>
+                    {{ day }}
+                </th>
+            {% endfor %}
+            <tr>
+                <form method="POST">
+                {% csrf_token %}
+                {% for day in weekdays %}   
+                    <td><input id="availability-checkbox" type="checkbox" value="{{day}}" name="availability" ></td>
+                {% endfor %}
+                    <td>
+                        <button style="margin: 5px;"type="submit"> Confirm Availability </button>
+                    </td>
+                </form>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+</html>
