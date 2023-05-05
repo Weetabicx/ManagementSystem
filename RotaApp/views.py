@@ -63,3 +63,7 @@ def rota(request):
     return render(request, 'rota.html',
                   {'days': days.values(),
                   'weekdays': range(0,7)})
+
+@login_required
+def dashboard(request):
+   pass
