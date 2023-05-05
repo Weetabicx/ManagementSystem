@@ -4,9 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     
-    companies = [
-        ("Glynhill", "Glynhill Hotel LTD")
-    ]
     departments = [
         ("Reception", "Reception Staff"),
         ("Function", "Function Staff"),
@@ -14,7 +11,6 @@ class User(AbstractUser):
     ]
 
     employeeID = models.AutoField(unique=True, primary_key=True)
-    company = models.CharField(max_length=16, choices=companies)
-    management = models.BooleanField()
+    management = models.BooleanField(default=False)
     department = models.CharField(max_length=16, choices=departments)
     availability = models.CharField(max_length=16)
