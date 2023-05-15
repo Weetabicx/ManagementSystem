@@ -1,39 +1,44 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 {% load static %}
 
 <html>
-    {% block head %}
-        <title> Home </title>
-        <link rel="stylesheet" href="{% static 'style.css' %}">
-    {% endblock %}
-    
-{% block body %}
-    <div class="navbar">
-        <span id="sign-out">
-            <a href="{% url 'logout'%}">Sign Out</a>
-        </span>
-        <a href="/" style="background-color: white;">Rota</a>
-        <a href="availability">Availability</a>
-        {% if user.management  %}
-    </div>
-
-
-    <div class="rota">
-        <table>
-            {% for day in days %}
-                <th>
-                    {{ day }}
-                </th>
-            {% endfor %}
-            <tr>
-                <form method="POST">
-                {% csrf_token %}
-                {% for day in weekdays %}   
-                    <td style="margin-left: auto; margin-right: 0;">shift {{ day }}</td>
-                {% endfor %}
-                </form>
-            </tr>
-        </table>
-    </div>
+{% block head %}
+<title> Home </title>
+<link rel="stylesheet" href="{% static 'style.css' %}">
 {% endblock %}
+
+{% block body %}
+<div class="navbar">
+    <span id="sign-out">
+        <a href="{% url 'logout'%}">Sign Out</a>
+    </span>
+    <a href="/" style="background-color: white;">Rota</a>
+    <a href="availability">Availability</a>
+    {% if user.management %}
+    <a href="dashboard">Dashboard</a>
+    {% endif %}
+</div>
+
+
+<div class="rota">
+    <table>
+        {% for day in days %}
+        <th>
+            {{ day }}
+        </th>
+        {% endfor %}
+        <tr>
+            <form method="POST">
+                {% csrf_token %}
+                {% for day in weekdays %}
+                <td style="margin-left: auto; margin-right: 0;">shift {{ day }}</td>
+                {% endfor %}
+            </form>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}
+
 </html>

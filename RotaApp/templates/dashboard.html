@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+{% block head %}
+<title> Home </title>
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="navbar">
+    <span id="sign-out">
+        <a href="{% url 'logout'%}">Sign Out</a>
+    </span>
+    <a href="/">Rota</a>
+    <a href="availability" style="background-color: white;">Availability</a>
+    <a href="url">Availability</a>
+</div>
+
+<div class="rota">
+    <table style="background-color: white;">
+        <th> Staff </th>
+        {% for day in days %}
+        <th>
+            {{ day }}
+        </th>
+        {% endfor %}
+        {% for rowdata in rows %}
+        <tr>
+            {% for r in rowdata %}
+                {% if r == True %} 
+                <td> Available </td>
+                {% elif r == False %}
+                <td style="margin-left: 10px;"> - </td>
+                {% else %} 
+                <td> {{r}} </td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+{% block head %}
+<title> Home </title>
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="navbar">
+    <span id="sign-out">
+        <a href="{% url 'logout'%}">Sign Out</a>
+    </span>
+    <a href="/">Rota</a>
+    <a href="availability" style="background-color: white;">Availability</a>
+    <a href="url">Availability</a>
+    {% if user.management %}
+    <a href="dashboard">Dashboard</a>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+</html>
