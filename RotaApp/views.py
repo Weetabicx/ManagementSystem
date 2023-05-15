@@ -8,47 +8,56 @@ from .models import User
 
 from datetime import datetime, timedelta
 
+
 def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect("rota")
+        form = LoginForm(request.POST)
+        return render(request, "login.html", {"form": form})
 
-  if request.method == 'POST':
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = authenticate(username=username, password=password)
-    if user:
-      login(request,user)
-      return redirect('rota')
-    form = LoginForm(request.POST)
-    return render(request, 'login.html', {'form': form})
+    else:
+        form = LoginForm(request.POST)
+        return render(request, "login.html", {"form": form})
 
-  else:
-    form = LoginForm(request.POST)
-    return render(request, 'login.html', {'form': form})
 
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")
+
 
 @login_required
 def availability(request):
     if request.method == "POST":
-      avail = request.POST.getlist('availability')
-      user = request.user
-      user.availability  = avail
-      user.save()
-      return redirect('rota')
-      
+        avail = request.POST.getlist("availability")
+        user = request.user
+        availability = []
+        for i in range(0, 7):
+            if str(i) in avail:
+                availability.append(True)
+            else:
+                availability.append(False)
+
+        user.availability = availability
+        user.save()
+        return redirect("rota")
+
     today = datetime.now().weekday()
     monday = datetime.now() - timedelta(days=today)
 
     days = {}
     for i in range(0, 7):
-      days[i] = (monday + timedelta(days=i)).strftime('%A %d/%m/%Y')
+        days[i] = (monday + timedelta(days=i)).strftime("%A %d/%m/%Y")
 
+    return render(
+        request, "availability.html", {"days": days.values(), "weekdays": range(0, 7)}
+    )
 
-    return render(request, 'availability.html',
-                  {'days': days.values(),
-                  'weekdays': range(0,7)})
 
 @login_required
 def rota(request):
@@ -57,13 +66,31 @@ def rota(request):
 
     days = {}
     for i in range(0, 7):
-      days[i] = (monday + timedelta(days=i)).strftime('%A %d/%m/%Y')
+        days[i] = (monday + timedelta(days=i)).strftime("%A %d/%m/%Y")
 
+    return render(
+        request, "rota.html", {"days": days.values(), "weekdays": range(0, 7)}
+    )
 
-    return render(request, 'rota.html',
-                  {'days': days.values(),
-                  'weekdays': range(0,7)})
 
 @login_required
 def dashboard(request):
-   pass
+    rows = []
+    employees = User.objects.all()
+    for employee in employees:
+        availability = employee.availability[1:-1].split(", ")
+        availability = [True if x == "True" else False for x in availability]
+        x = []
+        x.append(employee.first_name + " " + employee.last_name)
+        for day in availability:
+            x.append(day)
+        rows.append(x)
+
+    today = datetime.now().weekday()
+    monday = datetime.now() - timedelta(days=today)
+
+    days = {}
+    for i in range(0, 7):
+        days[i] = (monday + timedelta(days=i)).strftime("%A %d/%m/%Y")
+    print(rows)
+    return render(request, "dashboard.html", {"rows": rows, "days": days.values()})
